@@ -39,10 +39,10 @@ This is the main folder containing the core of the project.
   -  pvtv2.py: Implements the advanced version, PVTv2.
 
 - **🧩 mods**: Contains modules that provide additional functionalities.
-  -  AGF.py: Adaptive Gradient Fusion module.
-  -  DCR.py: Dynamic Context Refinement module.
-  -  DGT.py: Dynamic Graph Transformer module.
-  -  SFI.py: Spatial Feature Integration module.
+  -  AGF.py: Anisotropic Gradient Fusion module.
+  -  DCR.py: Dual-Channel Recursive module.
+  -  DGT.py: Discrete-Wavelet Gabor Transform module.
+  -  SFI.py: Selective Feature Integration module.
   -  bricks.py: Contains all the necessary functions and classes used across the modules.
 
 - **🛠️ utils**: Provides utility functions for data loading and loss calculations.
