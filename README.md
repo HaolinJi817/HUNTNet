@@ -27,10 +27,10 @@ The main directory structure of the project is as follows:
 ## 🧑‍💻 Code Overview
 
 ### 1. 📄 README.md
-This file provides a comprehensive 📝 description of the project, including the purpose, features, and setup ⚙️ instructions.
+This file provides a comprehensive description of the project, including the purpose, features, and setup instructions.
 
 ### 2. 🗂️ HUNTNet
-This is the main 📁 folder containing the core of the project.
+This is the main folder containing the core of the project.
 
 - **📚 lib**: Contains the library files for the HUNTNet model.
   -  HNet.py: Implements the HUNTNet model.
@@ -45,10 +45,10 @@ This is the main 📁 folder containing the core of the project.
   -  SFI.py: Spatial Feature Integration module.
   -  bricks.py: Contains all the necessary functions and classes used across the modules.
 
-- **🛠️ utils**: Provides utility functions for 📊 data loading and loss calculations.
+- **🛠️ utils**: Provides utility functions for data loading and loss calculations.
 
 ### 3. 📋 requirements.txt
-Lists all the dependencies required for the project to run. You can install them using 🐍 pip.
+Lists all the dependencies required for the project to run. You can install them using pip.
 
 ## 📥 Installation and Usage
 
