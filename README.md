@@ -24,27 +24,35 @@ The main directory structure of the project is as follows:
 └── requirements.txt    # List of dependencies
 ```
 
-## Code Overview
+## 🧑‍💻 Code Overview
 
-### 1. main.py
+### 1. 📄 README.md
+This file provides a comprehensive 📝 description of the project, including the purpose, features, and setup ⚙️ instructions.
 
-This is the main entry file of the project, responsible for initializing the project and executing the main logic. You can start the project by running this file.
+### 2. 🗂️ HUNTNet
+This is the main 📁 folder containing the core of the project.
 
-### 2. utils.py
+- **📚 lib**: Contains the library files for the HUNTNet model.
+  - ** HNet.py**: Implements the HUNTNet model.
+  - ** _init_.py**: Initialization file for the library module.
+  - ** pvt.py**: Defines the original PVT (Pyramid Vision Transformer).
+  - ** pvtv2.py**: Implements the advanced version, PVTv2.
 
-Contains common utility functions such as data processing, logging, etc., to facilitate code reuse.
+- **🧩 mods**: Contains modules that provide additional functionalities.
+  - ** AGF.py**: Adaptive Gradient Fusion module.
+  - ** DCR.py**: Dynamic Context Refinement module.
+  - ** DGT.py**: Dynamic Graph Transformer module.
+  - ** SFI.py**: Spatial Feature Integration module.
+  - ** bricks.py**: Contains all the necessary functions and classes used across the modules.
 
-### 3. data_loader.py
+- **🛠️ utils**: Provides utility functions for 📊 data loading and loss calculations.
 
-The data loading module, responsible for reading data from files or databases and converting it into a format that the model can use.
+### 3. 📋 requirements.txt
+Lists all the dependencies required for the project to run. You can install them using 🐍 pip.
 
-### 4. model.py
+## 📥 Installation and Usage
 
-Defines the structure and training methods of the machine learning model, including training, evaluation, and saving of the model.
-
-## Installation and Usage
-
-### Dependencies
+### 📦 Dependencies
 
 Make sure you have the following dependencies installed in your environment:
 
@@ -52,18 +60,11 @@ Make sure you have the following dependencies installed in your environment:
 $ pip install -r requirements.txt
 ```
 
-### Run the Project
-
-Run the following command to start the project:
-
-```
-$ python src/main.py
-```
-
-## Contributing
+## 🤝 Contributing
 
 Feel free to submit issues or pull requests to contribute to the project and improve it.
 
-## License
+## 📜 License
 
 This project is licensed under the MIT License. For more details, please refer to the LICENSE file.
+
