@@ -24,54 +24,46 @@ The main directory structure of the project is as follows:
 └── requirements.txt    # List of dependencies
 ```
 
-ode Overview
+## Code Overview
 
-1. HNet.py (HUNTNet Model)
+### 1. main.py
 
-This file defines the core HUNTNet model, incorporating advanced feature manipulation and transformer-based techniques for decoupling and re-coupling target features.
+This is the main entry file of the project, responsible for initializing the project and executing the main logic. You can start the project by running this file.
 
-2. pvt.py and pvtv2.py
+### 2. utils.py
 
-These files define the original Pyramid Vision Transformer (PVT) and the advanced PVTv2, respectively, which serve as essential components for feature extraction and transformation in HUNTNet.
+Contains common utility functions such as data processing, logging, etc., to facilitate code reuse.
 
-3. Modules (mods)
+### 3. data_loader.py
 
-The mods folder contains various feature transformation modules:
+The data loading module, responsible for reading data from files or databases and converting it into a format that the model can use.
 
-AGF.py: Implements Adaptive Gradient Fusion, helping to merge feature gradients adaptively.
+### 4. model.py
 
-DCR.py: Handles Decoupled Component Recombination, which is crucial for separating and recombining features.
+Defines the structure and training methods of the machine learning model, including training, evaluation, and saving of the model.
 
-DGT.py: Defines Dynamic Group Transformation, for adaptive grouping of feature channels.
+## Installation and Usage
 
-SFI.py: Responsible for Selective Feature Integration, enabling effective feature aggregation.
-
-bricks.py: Contains commonly used functions and building blocks for model construction.
-
-4. Utils
-
-The utils directory contains utilities for data loading, loss function definitions, and other helper functions required for smooth project execution.
-
-Installation and Usage
-
-Dependencies
+### Dependencies
 
 Make sure you have the following dependencies installed in your environment:
 
+```
 $ pip install -r requirements.txt
+```
 
-Run the Project
+### Run the Project
 
-To start training or testing the HUNTNet model, run the following command:
+Run the following command to start the project:
 
-$ python HUNTNet/lib/HNet.py
+```
+$ python src/main.py
+```
 
-Ensure that the appropriate configurations are set in the relevant files before running the model.
-
-Contributing
+## Contributing
 
 Feel free to submit issues or pull requests to contribute to the project and improve it.
 
-License
+## License
 
 This project is licensed under the MIT License. For more details, please refer to the LICENSE file.
