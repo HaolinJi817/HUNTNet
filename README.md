@@ -33,17 +33,17 @@ This file provides a comprehensive 📝 description of the project, including th
 This is the main 📁 folder containing the core of the project.
 
 - **📚 lib**: Contains the library files for the HUNTNet model.
-  - ** HNet.py**: Implements the HUNTNet model.
-  - ** _init_.py**: Initialization file for the library module.
-  - ** pvt.py**: Defines the original PVT (Pyramid Vision Transformer).
-  - ** pvtv2.py**: Implements the advanced version, PVTv2.
+  -  HNet.py: Implements the HUNTNet model.
+  -  _init_.py: Initialization file for the library module.
+  -  pvt.py: Defines the original PVT (Pyramid Vision Transformer).
+  -  pvtv2.py: Implements the advanced version, PVTv2.
 
 - **🧩 mods**: Contains modules that provide additional functionalities.
-  - ** AGF.py**: Adaptive Gradient Fusion module.
-  - ** DCR.py**: Dynamic Context Refinement module.
-  - ** DGT.py**: Dynamic Graph Transformer module.
-  - ** SFI.py**: Spatial Feature Integration module.
-  - ** bricks.py**: Contains all the necessary functions and classes used across the modules.
+  -  AGF.py: Adaptive Gradient Fusion module.
+  -  DCR.py: Dynamic Context Refinement module.
+  -  DGT.py: Dynamic Graph Transformer module.
+  -  SFI.py: Spatial Feature Integration module.
+  -  bricks.py: Contains all the necessary functions and classes used across the modules.
 
 - **🛠️ utils**: Provides utility functions for 📊 data loading and loss calculations.
 
