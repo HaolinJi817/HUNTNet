@@ -1,6 +1,6 @@
 # HUNTNet
 
-The aim of this task is to decouple and re-couple target features from multiple perspectives. The core network code is provided below:
+HUNTNet is a network designed to decouple and re-couple target features from multiple perspectives. The project utilizes advanced techniques for feature transformation and processing, including the use of PVT (Pyramid Vision Transformer) and its enhanced version, PVTv2. The modular approach facilitates effective feature learning by combining different custom components and modules.
 
 ## Directory Structure
 
@@ -8,56 +8,70 @@ The main directory structure of the project is as follows:
 
 ```
 ├── README.md           # Project description file
-├── HUNTNet                 # Source code directory
-│   ├── main.py         # Main entry file
-│   ├── utils.py        # Utility functions library
-│   ├── data_loader.py  # Data loading module
-│   └── model.py        # Machine learning model definition
-├── requirements.txt    # List of dependencies
-└── docs                # Documentation folder
-    └── usage.md        # Usage instructions
+├── HUNTNet             # Main folder
+│   ├── lib             # Library folder
+│   │   ├── HNet.py     # HUNTNet model
+│   │   ├── _init_.py   # Initial
+│   │   ├── pvt.py      # Original PVT
+│   │   └── pvtv2.py    # Advanced PVTv2
+│   ├── mods            # Modules folder
+│   │   ├── AGF.py
+│   │   ├── DCR.py
+│   │   ├── DGT.py
+│   │   ├── SFI.py
+│   │   └── bricks.py   # All the funcs and classes needed before
+│   └── utils           # Data loading module and Loss funcs
+└── requirements.txt    # List of dependencies
 ```
 
-## Code Overview
+ode Overview
 
-### 1. main.py
+1. HNet.py (HUNTNet Model)
 
-This is the main entry file of the project, responsible for initializing the project and executing the main logic. You can start the project by running this file.
+This file defines the core HUNTNet model, incorporating advanced feature manipulation and transformer-based techniques for decoupling and re-coupling target features.
 
-### 2. utils.py
+2. pvt.py and pvtv2.py
 
-Contains common utility functions such as data processing, logging, etc., to facilitate code reuse.
+These files define the original Pyramid Vision Transformer (PVT) and the advanced PVTv2, respectively, which serve as essential components for feature extraction and transformation in HUNTNet.
 
-### 3. data_loader.py
+3. Modules (mods)
 
-The data loading module, responsible for reading data from files or databases and converting it into a format that the model can use.
+The mods folder contains various feature transformation modules:
 
-### 4. model.py
+AGF.py: Implements Adaptive Gradient Fusion, helping to merge feature gradients adaptively.
 
-Defines the structure and training methods of the machine learning model, including training, evaluation, and saving of the model.
+DCR.py: Handles Decoupled Component Recombination, which is crucial for separating and recombining features.
 
-## Installation and Usage
+DGT.py: Defines Dynamic Group Transformation, for adaptive grouping of feature channels.
 
-### Dependencies
+SFI.py: Responsible for Selective Feature Integration, enabling effective feature aggregation.
+
+bricks.py: Contains commonly used functions and building blocks for model construction.
+
+4. Utils
+
+The utils directory contains utilities for data loading, loss function definitions, and other helper functions required for smooth project execution.
+
+Installation and Usage
+
+Dependencies
 
 Make sure you have the following dependencies installed in your environment:
 
-```
 $ pip install -r requirements.txt
-```
 
-### Run the Project
+Run the Project
 
-Run the following command to start the project:
+To start training or testing the HUNTNet model, run the following command:
 
-```
-$ python src/main.py
-```
+$ python HUNTNet/lib/HNet.py
 
-## Contributing
+Ensure that the appropriate configurations are set in the relevant files before running the model.
+
+Contributing
 
 Feel free to submit issues or pull requests to contribute to the project and improve it.
 
-## License
+License
 
 This project is licensed under the MIT License. For more details, please refer to the LICENSE file.
