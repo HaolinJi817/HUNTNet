@@ -8,14 +8,14 @@ class DGT(nn.Module):
     def __init__(self, in_channels, out_channels, reduction=16, wavelet='haar', n_fft=256, hop_length=None):
         super(DGT, self).__init__()
         self.upsample = nn.Upsample(scale_factor=2, mode='bilinear', align_corners=True)
-        self.conv_in = BasicConv2d(in_channels, out_channels, kernel_size=3, padding=1)
-        self.conv_down1 = nn.Conv2d(out_channels, 1, kernel_size=3, padding=1)
-        self.conv_down2 = nn.Conv2d(out_channels, 1, kernel_size=3, padding=1)
-        self.conv_wt = nn.Conv2d(1, 1, kernel_size=3, padding=1)
-        self.conv_edge = nn.Conv2d(1, out_channels, kernel_size=3, padding=1)
-        self.conv_up = BasicConv2d(2, out_channels, kernel_size=3, padding=1)
-        self.conv_combine = nn.Conv2d(2 * out_channels, out_channels, kernel_size=3, padding=1)
-        self.conv_out = BasicConv2d(out_channels, out_channels, kernel_size=3, padding=1)
+        self.conv_in = BasicConv2d(in_channels, out_channels, kernel_size=1, padding=0)  # Reduced kernel size to 1x1 to lower MACs
+        self.conv_down1 = nn.Conv2d(out_channels, 1, kernel_size=1, padding=0)  # Use 1x1 conv to reduce MACs
+        self.conv_down2 = nn.Conv2d(out_channels, 1, kernel_size=1, padding=0)  # Use 1x1 conv to reduce MACs
+        self.conv_wt = nn.Conv2d(1, 1, kernel_size=1, padding=0)  # Use 1x1 conv to reduce MACs
+        self.conv_edge = nn.Conv2d(1, out_channels, kernel_size=1, padding=0)  # Use 1x1 conv to reduce MACs
+        self.conv_up = BasicConv2d(2, out_channels, kernel_size=1, padding=0)  # Use 1x1 conv to reduce MACs
+        self.conv_combine = nn.Conv2d(2 * out_channels, out_channels, kernel_size=1, padding=0)  # Use 1x1 conv to reduce MACs
+        self.conv_out = BasicConv2d(out_channels, out_channels, kernel_size=1, padding=0)  # Use 1x1 conv to reduce MACs
         self.wavelet = wavelet
         self.cbam = CBAM(out_channels, reduction, kernel_size=7)
         
@@ -89,29 +89,29 @@ class DGT(nn.Module):
         return out
 
 
-#  Multi-Scale Domain Transform
+# Multi-Scale Domain Transform
 class MSDT(nn.Module):
     def __init__(self, in_channels, wavelet = 'haar'):
         super(MSDT, self).__init__()
         self.upsample = nn.Upsample(scale_factor=2, mode='bilinear', align_corners=True)
-        self.conv1 = BasicConv2d(in_channels, in_channels, 3, padding=1)
-        self.conv2 = BasicConv2d(in_channels, in_channels, 3, padding=1)
-        self.conv3 = BasicConv2d(in_channels, in_channels, 3, padding=1)
-        self.conv7 = BasicConv2d(in_channels, in_channels, 3, padding=1)
-        self.conv4 = BasicConv2d(in_channels, in_channels, 3, padding=1)
-        self.conv5 = BasicConv2d(2 * in_channels, 2 * in_channels, 3, padding=1)
-        self.conv6 = BasicConv2d(3 * in_channels, 3 * in_channels, 3, padding=1)
+        self.conv1 = BasicConv2d(in_channels, in_channels, 1, padding=0)  # Use 1x1 conv to reduce MACs
+        self.conv2 = BasicConv2d(in_channels, in_channels, 1, padding=0)  # Use 1x1 conv to reduce MACs
+        self.conv3 = BasicConv2d(in_channels, in_channels, 1, padding=0)  # Use 1x1 conv to reduce MACs
+        self.conv7 = BasicConv2d(in_channels, in_channels, 1, padding=0)  # Use 1x1 conv to reduce MACs
+        self.conv4 = BasicConv2d(in_channels, in_channels, 1, padding=0)  # Use 1x1 conv to reduce MACs
+        self.conv5 = BasicConv2d(2 * in_channels, 2 * in_channels, 1, padding=0)  # Use 1x1 conv to reduce MACs
+        self.conv6 = BasicConv2d(3 * in_channels, 3 * in_channels, 1, padding=0)  # Use 1x1 conv to reduce MACs
 
-        self.conv_concat2 = BasicConv2d(2 * in_channels, 2 * in_channels, 3, padding=1)
-        self.conv_concat3 = BasicConv2d(3 * in_channels, 3 * in_channels, 3, padding=1)
-        self.conv_concat4 = BasicConv2d(4 * in_channels, 4 * in_channels, 3, padding=1)
-        self.conv_4 = BasicConv2d(4 * in_channels, 4 * in_channels, 3, padding=1)
+        self.conv_concat2 = BasicConv2d(2 * in_channels, 2 * in_channels, 1, padding=0)  # Use 1x1 conv to reduce MACs
+        self.conv_concat3 = BasicConv2d(3 * in_channels, 3 * in_channels, 1, padding=0)  # Use 1x1 conv to reduce MACs
+        self.conv_concat4 = BasicConv2d(4 * in_channels, 4 * in_channels, 1, padding=0)  # Use 1x1 conv to reduce MACs
+        self.conv_4 = BasicConv2d(4 * in_channels, 4 * in_channels, 1, padding=0)  # Use 1x1 conv to reduce MACs
         self.conv_5 = nn.Conv2d(4 * in_channels, in_channels, 1)
         self.conv_6 = nn.Conv2d(in_channels, 1, 1)
         self.bn = nn.BatchNorm2d(1)
         self.wavelet = wavelet
-        self.conv_in = nn.Conv2d(1, 1, kernel_size=3, stride=1, padding=1)
-        self.fusion_conv = nn.Conv2d(2, 1, kernel_size=3, stride=1, padding=1)
+        self.conv_in = nn.Conv2d(1, 1, kernel_size=1, stride=1, padding=0)  # Use 1x1 conv to reduce MACs
+        self.fusion_conv = nn.Conv2d(2, 1, kernel_size=1, stride=1, padding=0)  # Use 1x1 conv
 
     def wavelet_transform(self, x):
         # wt
@@ -133,7 +133,6 @@ class MSDT(nn.Module):
         return LL, LH, HL, HH
 
     def forward(self, x1, x2, x3, x4):
-
         x4_1 = x4
         x3_1 = self.conv1(self.upsample(x4)) + x3
         x2_1 = self.conv2(self.upsample(x3_1)) * self.conv3(self.upsample(x3)) + x2

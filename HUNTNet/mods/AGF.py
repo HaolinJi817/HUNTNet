@@ -10,21 +10,19 @@ class AGF(nn.Module):
         super().__init__()
         self.conv_in = BasicConv2d(op_channel, op_channel, 3, 1, 1)
         self.conv_fg = BasicConv2d(op_channel, op_channel, 3, 1, 1)
-        
-        self.conv_tri1 = BasicConv2d(3 * op_channel, op_channel, 3, 1, 1)
-        self.conv_tri2 = BasicConv2d(3 * op_channel, op_channel, 3, 1, 1)
-        self.conv_tri3 = BasicConv2d(3 * op_channel, op_channel, 3, 1, 1)
-        
+
         # Adaptive edge enhancement module
         self.edge_attention = SEBlock(op_channel)
         
+        # Simplified sequence to reduce MACs
         self.seq = nn.Sequential(
-            nn.Conv2d(op_channel, op_channel, kernel_size=3, padding=1),
+            nn.Conv2d(op_channel, op_channel, kernel_size=1, padding=0),  # Use 1x1 conv to reduce MACs
             nn.BatchNorm2d(op_channel, affine=False)
         )
         
-        self.conv_down = nn.Conv2d(op_channel, tg_channel, 3, 1, 1)
-        self.conv_out = BasicConv2d(tg_channel, tg_channel, 3, 1, 1)
+        # Reduce kernel size to 1x1 to lower MACs
+        self.conv_down = nn.Conv2d(op_channel, tg_channel, 1, 1, 0)
+        self.conv_out = BasicConv2d(tg_channel, tg_channel, 1, 1, 0)  # Use 1x1 conv to reduce MACs
         
         # Residual Connection Layer
         self.residual = nn.Conv2d(op_channel, tg_channel, 1)
@@ -61,31 +59,32 @@ class AGF(nn.Module):
         return out
 
 
-#  Multi-Scale Anisotropic Gradient
+# Multi-Scale Anisotropic Gradient
 class MSAG(nn.Module):
     def __init__(self, in_channels):
         super(MSAG, self).__init__()
         self.upsample = nn.Upsample(scale_factor=2, mode='bilinear', align_corners=True)
-        self.conv1 = BasicConv2d(in_channels, in_channels, 3, padding=1)
-        self.conv2 = BasicConv2d(in_channels, in_channels, 3, padding=1)
-        self.conv3 = BasicConv2d(in_channels, in_channels, 3, padding=1)
-        self.conv7 = BasicConv2d(in_channels, in_channels, 3, padding=1)
-        self.conv4 = BasicConv2d(in_channels, in_channels, 3, padding=1)
-        self.conv5 = BasicConv2d(2 * in_channels, 2 * in_channels, 3, padding=1)
-        self.conv6 = BasicConv2d(3 * in_channels, 3 * in_channels, 3, padding=1)
+        
+        # Reduce number of convolutions and use 1x1 conv to lower MACs
+        self.conv1 = BasicConv2d(in_channels, in_channels, 1, padding=0)
+        self.conv2 = BasicConv2d(in_channels, in_channels, 1, padding=0)
+        self.conv3 = BasicConv2d(in_channels, in_channels, 1, padding=0)
+        self.conv7 = BasicConv2d(in_channels, in_channels, 1, padding=0)
+        self.conv4 = BasicConv2d(in_channels, in_channels, 1, padding=0)
+        self.conv5 = BasicConv2d(2 * in_channels, 2 * in_channels, 1, padding=0)
+        self.conv6 = BasicConv2d(3 * in_channels, 3 * in_channels, 1, padding=0)
 
-        self.conv_concat2 = BasicConv2d(2 * in_channels, 2 * in_channels, 3, padding=1)
-        self.conv_concat3 = BasicConv2d(3 * in_channels, 3 * in_channels, 3, padding=1)
-        self.conv_concat4 = BasicConv2d(4 * in_channels, 4 * in_channels, 3, padding=1)
-        self.conv_4 = BasicConv2d(4 * in_channels, 4 * in_channels, 3, padding=1)
+        self.conv_concat2 = BasicConv2d(2 * in_channels, 2 * in_channels, 1, padding=0)
+        self.conv_concat3 = BasicConv2d(3 * in_channels, 3 * in_channels, 1, padding=0)
+        self.conv_concat4 = BasicConv2d(4 * in_channels, 4 * in_channels, 1, padding=0)
+        self.conv_4 = BasicConv2d(4 * in_channels, 4 * in_channels, 1, padding=0)
         self.conv_5 = nn.Conv2d(4 * in_channels, in_channels, 1)
         self.conv_6 = nn.Conv2d(in_channels, 1, 1)
         self.bn = nn.BatchNorm2d(1)
-        self.conv_in = nn.Conv2d(1, 1, kernel_size=3, stride=1, padding=1)
-        self.fusion_conv = nn.Conv2d(2, 1, kernel_size=3, stride=1, padding=1)
+        self.conv_in = nn.Conv2d(1, 1, kernel_size=1, stride=1, padding=0)  # Use 1x1 conv to reduce MACs
+        self.fusion_conv = nn.Conv2d(2, 1, kernel_size=1, stride=1, padding=0)  # Use 1x1 conv
 
     def forward(self, x1, x2, x3, x4):
-
         x4_1 = x4
         x3_1 = self.conv1(self.upsample(x4)) + x3
         x2_1 = self.conv2(self.upsample(x3_1)) * self.conv3(self.upsample(x3)) + x2

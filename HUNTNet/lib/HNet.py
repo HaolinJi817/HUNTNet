@@ -6,7 +6,7 @@ from mods.bricks import BasicConv2d
 from mods.DCR import DCR
 from mods.DGT import DGT, MSDT
 from mods.AGF import AGF, MSAG 
-import mods.SFI as SFI
+from mods.SFI import SFI
 
 
 class Network(nn.Module):
